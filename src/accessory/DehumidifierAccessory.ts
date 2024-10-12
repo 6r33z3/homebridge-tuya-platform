@@ -6,6 +6,7 @@ import { configureRotationSpeedLevel } from './characteristic/RotationSpeed';
 import { configureSwingMode } from './characteristic/SwingMode';
 import { configureLockPhysicalControls } from './characteristic/LockPhysicalControls';
 import { configureRelativeHumidityDehumidifierThreshold } from './characteristic/RelativeHumidityDehumidifierThreshold';
+import { configureStatusFault } from './characteristic/StatusFaultDetected';
 
 const SCHEMA_CODE = {
   ACTIVE: ['switch'],
@@ -15,6 +16,7 @@ const SCHEMA_CODE = {
   SPEED_LEVEL: ['fan_speed_enum'],
   SWING: ['swing'],
   LOCK: ['child_lock'],
+  FAULT: ['fault']
 };
 
 export default class DehumidifierAccessory extends BaseAccessory {
@@ -38,6 +40,7 @@ export default class DehumidifierAccessory extends BaseAccessory {
 
     // Other
     configureCurrentTemperature(this, undefined, this.getSchema(...SCHEMA_CODE.CURRENT_TEMP));
+    configureStatusFault(this, this.mainService(), this.getSchema(...SCHEMA_CODE.FAULT));
   }
 
   mainService() {
